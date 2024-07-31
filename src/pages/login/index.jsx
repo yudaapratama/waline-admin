@@ -119,7 +119,7 @@ export default function () {
         <div className="typecho-login">
           {/* <h1><a href="http://waline.js.org" className="i-logo">Waline</a></h1> */}
 
-          <form method="post" name="login" role="form" onSubmit={onSubmit}>
+          <form method="post" name="login" role="form" onSubmit={onSubmit} style={{ minWidth: '300px' }}>
             <p>
               <label htmlFor="email" className="sr-only">
                 {t('email')}

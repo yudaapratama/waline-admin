@@ -40,6 +40,21 @@ div[tabindex='-1'] {
   fill: #808080;
 }
 
+.social-accounts a #google {
+	--color-1: #4285F4;
+  --color-2: #4285F4;
+  --color-3: #FBBC05;
+  --color-4: #EB4335;
+}
+
+.account-item.google:hover a #google,
+.account-item.google.bind a #google {
+	--color-1: #4285F4;
+  --color-2: #4285F4;
+  --color-3: #FBBC05;
+  --color-4: #EB4335;
+}
+
 .account-item.github:hover a path,
 .account-item.github.bind a path {
   fill: #1b1f23;

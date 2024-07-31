@@ -99,8 +99,8 @@ export default function () {
           <div className="row typecho-page-main">
             <div className="col-mb-12 col-tb-3">
               <p>
-                <a
-                  href="javascript:void(0)"
+                <span
+                  style={{ cursor: 'pointer' }}
                   title={t('change avatar')}
                   target="_blank"
                   rel="noreferrer"
@@ -113,7 +113,7 @@ export default function () {
                       `https://seccdn.libravatar.org/avatar/${user.mailMd5}?s=220&amp;r=X&amp;d=mm`
                     }
                   />
-                </a>
+                </span>
               </p>
               <h2>{user.display_name}</h2>
               <p>{user.email}</p>
@@ -166,11 +166,11 @@ export default function () {
 
                   <ul className="typecho-option">
                     <li>
-                      <label className="typecho-label" htmlFor="url-0-2">
+                      <label className="typecho-label" htmlFor="url-0-3">
                         {t('exclusive label')}
                       </label>
                       <input
-                        id="url-0-2"
+                        id="url-0-3"
                         name="label"
                         type="text"
                         className="text"
@@ -229,7 +229,7 @@ export default function () {
                           href={
                             user[social]
                               ? `https://${social}.com/${user[social]}`
-                              : `${baseUrl}oauth/?type=${social}&state=${token}`
+                              : `${baseUrl}api/oauth/?type=${social}&state=${token}`
                           }
                           target={user[social] ? '_blank' : '_self'}
                           rel="noreferrer"
