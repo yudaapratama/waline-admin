@@ -19998,7 +19998,7 @@ function XP() {
     const A = location.pathname.match(/(.*?\/)ui/);
     M = A ? A[1] : "/";
   }
-  const O = ["qq", "weibo", "github", "twitter", "facebook"];
+  const O = ["google"];
   return /* @__PURE__ */ E.jsxDEV(E.Fragment, { children: [
     /* @__PURE__ */ E.jsxDEV(fo, {}, void 0, !1, {
       fileName: "C:/Projek/NodeJS/waline-admin/src/pages/login/index.jsx",
