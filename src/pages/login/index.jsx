@@ -100,7 +100,7 @@ export default function () {
     baseUrl = match ? match[1] : '/';
   }
 
-  const socials = ['qq', 'weibo', 'github', 'twitter', 'facebook'];
+  const socials = ['google'];
 
   return (
     <>
