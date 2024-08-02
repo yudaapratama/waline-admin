@@ -21,8 +21,11 @@ export default function () {
     const display_name = e.target.screenName.value;
     const avatar = e.target.avatar.files[0];
     // const label = e.target.label.value;
+		let url = user.avatar;
 		
-		const url = await uploadToImgBB(avatar);
+		if(avatar) {
+			url = await uploadToImgBB(avatar);
+		}
 
     // if (!display_name || !url) {
     //   return alert(t('nickname and homepage are required'));
