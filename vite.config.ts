@@ -30,9 +30,9 @@ export default defineConfig({
     port: 9010,
     proxy: {
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      '/token': 'http://localhost:8360',
+      '/token': 'http://127.0.0.1:8360',
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      '/user': 'http://localhost:8360',
+      '/user': 'http://127.0.0.1:8360',
     },
   },
 });

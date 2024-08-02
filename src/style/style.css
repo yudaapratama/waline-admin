@@ -8,8 +8,8 @@ html {
 
 body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background: #f6f6f3;
-  color: #444;
+  background: #373c42;
+  color: #bbb;
   font-size: 87.5%;
   line-height: 1.5;
 }
@@ -619,7 +619,7 @@ select {
 
 .profile-avatar {
   border: 1px dashed #d9d9d6;
-  max-width: 100%;
+  width: 150px;
 }
 
 /** 增加配置面板内部的错误样式 by 70 */
@@ -893,7 +893,7 @@ a.operate-reply {
 
 .typecho-table-wrap {
   padding: 30px;
-  background: #fff;
+  background: #292d33;
 }
 
 .typecho-list-table {
@@ -934,11 +934,11 @@ a.operate-reply {
 }
 
 .typecho-list-table tbody tr:hover td {
-  background-color: #f6f6f3;
+  background-color: #373c42;
 }
 
 .typecho-list-table tbody tr.checked td {
-  background-color: #fff9e8;
+  background-color: #373c42;
 }
 
 .typecho-list-table tr td .hidden-by-mouse {

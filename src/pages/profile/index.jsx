@@ -19,22 +19,47 @@ export default function () {
     e.preventDefault();
 
     const display_name = e.target.screenName.value;
-    const url = e.target.url.value;
-    const label = e.target.label.value;
+    const avatar = e.target.avatar.files[0];
+    // const label = e.target.label.value;
+		
+		const url = await uploadToImgBB(avatar);
 
-    if (!display_name || !url) {
-      return alert(t('nickname and homepage are required'));
-    }
+    // if (!display_name || !url) {
+    //   return alert(t('nickname and homepage are required'));
+    // }
 
     setProfileUpdating(true);
     try {
-      await dispatch.user.updateProfile({ display_name, url, label });
+      await dispatch.user.updateProfile({ display_name, avatar: url });
     } catch (e) {
       alert(e);
     } finally {
       setProfileUpdating(false);
+			location.reload();
     }
   };
+
+	const onChangeImageHandler = event => {
+    const size = event.target.files[0].size
+		if(parseInt(size) > (31 * 1024 * 1024)) {
+			alert('The image size is too large, please choose another one');
+			document.getElementsByClassName('file')[0].value = '';
+		}
+	}
+
+	const uploadToImgBB = async function (file) {
+		let formData = new FormData();
+        
+		formData.append('image', file);
+		formData.append('key', 'd8dc5b96ed210c8360b48acb0fa5ee32');
+
+		const response = await fetch('https://api.imgbb.com/1/upload', {
+				method: 'POST',
+				body: formData,
+		})
+		const result = await response.json();
+		return result.data.url;
+	}
 
   const onPasswordUpdate = async function (e) {
     e.preventDefault();
@@ -100,11 +125,7 @@ export default function () {
             <div className="col-mb-12 col-tb-3">
               <p>
                 <span
-                  style={{ cursor: 'pointer' }}
-                  title={t('change avatar')}
-                  target="_blank"
                   rel="noreferrer"
-                  onClick={changeAvatar}
                 >
                   <img
                     className="profile-avatar"
@@ -142,39 +163,20 @@ export default function () {
                     </li>
                   </ul>
 
-                  <ul className="typecho-option">
-                    <li>
-                      <label className="typecho-label" htmlFor="url-0-2">
-                        {t('homepage')}
-                      </label>
-                      <input
-                        id="url-0-2"
-                        name="url"
-                        type="text"
-                        className="text"
-                        defaultValue={user.url}
-                      />
-                      <p className="description">
-                        <Trans
-                          i18nKey="homepage tips"
-                          defaults="Current users' homepage. It must be start with <code>http://</code> or <code>https://</code>."
-                          components={{ code: <code /> }}
-                        />
-                      </p>
-                    </li>
-                  </ul>
+                  
 
                   <ul className="typecho-option">
                     <li>
                       <label className="typecho-label" htmlFor="url-0-3">
-                        {t('exclusive label')}
+											{t('change avatar')}
                       </label>
                       <input
                         id="url-0-3"
-                        name="label"
-                        type="text"
-                        className="text"
-                        defaultValue={user.label}
+                        name="avatar"
+                        type="file"
+                        className="file"
+												onChange={onChangeImageHandler}
+												accept="image/*"
                       />
                       <p className="description"></p>
                     </li>
@@ -194,120 +196,8 @@ export default function () {
                 </form>
               </section>
               <br />
-              <section id="social-account">
-                <h3>{t('connect to social account')}</h3>
-                <div className="account-list">
-                  {/** warning: compat with old server version */}
-                  {window.ALLOW_SOCIALS && (
-                    <div
-                      className={cls('account-item github', {
-                        bind: user.github,
-                      })}
-                    >
-                      <a
-                        href={
-                          user.github
-                            ? `https://github.com/${user.github}`
-                            : `${baseUrl}oauth/github?state=${token}`
-                        }
-                        target={user.github ? '_blank' : '_self'}
-                        rel="noreferrer"
-                      >
-                        {React.createElement(Icons.github)}
-                      </a>
-                    </div>
-                  )}
-                  {!window.ALLOW_SOCIALS &&
-                    ['google'].map((social) => (
-                      <div
-                        key={social}
-                        className={cls('account-item', social, {
-                          bind: user[social],
-                        })}
-                      >
-                        <a
-                          href={
-                            user[social]
-                              ? `https://${social}.com/${user[social]}`
-                              : `${baseUrl}api/oauth/?type=${social}&state=${token}`
-                          }
-                          target={user[social] ? '_blank' : '_self'}
-                          rel="noreferrer"
-                        >
-                          {React.createElement(Icons[social])}
-                        </a>
-                        <div
-                          className="account-unbind"
-                          onClick={() => unbind(social)}
-                        >
-                          <svg
-                            className="close-icon"
-                            viewBox="0 0 1024 1024"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="14"
-                            height="14"
-                          >
-                            <path d="m568.569 512 170.267-170.267c15.556-15.556 15.556-41.012 0-56.569s-41.012-15.556-56.569 0L512 455.431 341.733 285.165c-15.556-15.556-41.012-15.556-56.569 0s-15.556 41.012 0 56.569L455.431 512 285.165 682.267c-15.556 15.556-15.556 41.012 0 56.569 15.556 15.556 41.012 15.556 56.569 0L512 568.569l170.267 170.267c15.556 15.556 41.012 15.556 56.569 0 15.556-15.556 15.556-41.012 0-56.569L568.569 512z" />
-                          </svg>
-                        </div>
-                      </div>
-                    ))}
-                </div>
-              </section>
-              <br />
-              <section id="change-password">
-                <h3>{t('change password')}</h3>
-                <form method="post" onSubmit={onPasswordUpdate}>
-                  <ul className="typecho-option">
-                    <li>
-                      <label className="typecho-label" htmlFor="password-0-11">
-                        {t('password')}
-                      </label>
-                      <input
-                        id="password-0-11"
-                        name="password"
-                        type="password"
-                        className="w-60"
-                        autoComplete="new-password"
-                      />
-                      <p className="description">
-                        <Trans i18nKey="password tips"></Trans>
-                      </p>
-                    </li>
-                  </ul>
-
-                  <ul className="typecho-option">
-                    <li>
-                      <label className="typecho-label" htmlFor="confirm-0-12">
-                        {t('password again')}
-                      </label>
-                      <input
-                        id="confirm-0-12"
-                        name="confirm"
-                        type="password"
-                        className="w-60"
-                        autoComplete="new-password"
-                      />
-                      <p className="description">
-                        <Trans i18nKey="password again tips"></Trans>
-                      </p>
-                    </li>
-                  </ul>
-                  <ul className="typecho-option typecho-option-submit">
-                    <li>
-                      <button
-                        type="submit"
-                        className="btn primary"
-                        disabled={isPasswordUpdating}
-                      >
-                        {t('update password')}
-                      </button>
-                    </li>
-                  </ul>
-                </form>
-              </section>
-              <br />
-              <TwoFactorAuth />
+              
+              
               <br />
             </div>
           </div>
