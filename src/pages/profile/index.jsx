@@ -26,8 +26,15 @@ export default function () {
 			                
 		const display_name = e.target.screenName.value;
 		// const avatar = e.target.avatar.files[0];
-		const avatar = croppedImage;
 		// const label = e.target.label.value;
+
+		let avatar
+		if(croppedImage) {
+			avatar = croppedImage
+		} else {
+			avatar = e.target.avatar.files[0];
+		}
+		
 		let url = user.avatar;
 		if(avatar) {
 			url = await uploadToImgBB(avatar);
