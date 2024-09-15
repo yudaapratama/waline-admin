@@ -70,5 +70,8 @@
   },
   "publishConfig": {
     "provenance": true
+  },
+  "dependencies": {
+    "cropperjs": "^1.6.2"
   }
 }

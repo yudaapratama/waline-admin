@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      cropperjs:
+        specifier: ^1.6.2
+        version: 1.6.2
     devDependencies:
       '@rematch/core':
         specifier: 2.2.0
@@ -587,6 +591,9 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
+
+  cropperjs@1.6.2:
+    resolution: {integrity: sha512-nhymn9GdnV3CqiEHJVai54TULFAE3VshJTXSqSJKa8yXAKyBKDWdhHarnlIPrshJ0WMFTGuFvG02YjLXfPiuOA==}
 
   crypt@0.0.2:
     resolution: {integrity: sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow==}
@@ -1410,6 +1417,8 @@ snapshots:
       path-type: 4.0.0
     optionalDependencies:
       typescript: 5.5.3
+
+  cropperjs@1.6.2: {}
 
   crypt@0.0.2: {}
 

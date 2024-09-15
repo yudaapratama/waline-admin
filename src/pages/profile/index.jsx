@@ -2,6 +2,9 @@ import cls from 'classnames';
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import 'cropperjs/dist/cropper.css';
+import Cropper from 'cropperjs';
+
 
 import TwoFactorAuth from './twoFactorAuth';
 import Header from '../../components/Header';
@@ -14,55 +17,125 @@ export default function () {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const { t } = useTranslation();
+	let cropper = null
+	let previousImage = null
+	let croppedImage = null
 
   const onProfileUpdate = async function (e) {
     e.preventDefault();
-
-    const display_name = e.target.screenName.value;
-    const avatar = e.target.avatar.files[0];
-    // const label = e.target.label.value;
+			                
+		const display_name = e.target.screenName.value;
+		// const avatar = e.target.avatar.files[0];
+		const avatar = croppedImage;
+		// const label = e.target.label.value;
 		let url = user.avatar;
-		
 		if(avatar) {
 			url = await uploadToImgBB(avatar);
 		}
 
-    // if (!display_name || !url) {
-    //   return alert(t('nickname and homepage are required'));
-    // }
+		// if (!display_name || !url) {
+		//   return alert(t('nickname and homepage are required'));
+		// }
 
-    setProfileUpdating(true);
-    try {
-      await dispatch.user.updateProfile({ display_name, avatar: url });
-    } catch (e) {
-      alert(e);
-    } finally {
-      setProfileUpdating(false);
+		setProfileUpdating(true);
+		try {
+			await dispatch.user.updateProfile({ display_name, avatar: url });
+		} catch (e) {
+			alert(e);
+		} finally {
+			setProfileUpdating(false);
 			location.reload();
-    }
+			}
+
   };
 
+	
 	const onChangeImageHandler = event => {
+		event.preventDefault();
+		const container = document.getElementById('canvas-container');
+		let canvas = document.getElementById('canvas');
+		const img = document.getElementById('images');
+
+		if (cropper) {
+			cropper.destroy();
+			cropper = null;
+		}
+		
+		if(event.target.files.length === 0) {
+			document.getElementsByClassName('file')[0].value = '';
+			img.removeAttribute('src');
+			container.setAttribute('style', 'display: none;');
+			return
+		}
+
     const size = event.target.files[0].size
 		if(parseInt(size) > (31 * 1024 * 1024)) {
 			alert('The image size is too large, please choose another one');
 			document.getElementsByClassName('file')[0].value = '';
+			return
 		}
+
+		img.src = URL.createObjectURL(event.target.files[0]);
+		previousImage = URL.createObjectURL(event.target.files[0]);
+
+		const context = canvas.getContext('2d');
+		const image = new Image();
+		
+		image.src = URL.createObjectURL(event.target.files[0]);
+		image.onload = function () {
+			canvas.width = img.offsetWidth;
+			canvas.height = img.offsetHeight;
+			context.drawImage(
+				image, 
+				0, 0, img.naturalWidth, img.naturalHeight,
+				0, 0, img.offsetWidth, img.offsetHeight
+			);
+			cropper = new Cropper(canvas);
+		};
+
+		container.setAttribute('style', 'display: grid; grid-template-rows: auto auto; gap: 10px;');
+	}
+
+	const onCropHandler = (event) => {
+		event.preventDefault();
+		const data = cropper.getCroppedCanvas().toDataURL('image/png');
+		const img = document.getElementById('images');
+		img.src = data;
+		const base64 = cropper.getCroppedCanvas().toDataURL().replace(/^data:image\/(png|jpg|jpeg);base64,/, '')
+		croppedImage = base64
+	}
+
+	const onResetHandler = (event) => {
+		event.preventDefault();
+		cropper.reset()
+		const img = document.getElementById('images');
+		img.src = previousImage;
 	}
 
 	const uploadToImgBB = async function (file) {
-		let formData = new FormData();
-        
-		formData.append('image', file);
-		formData.append('key', 'd8dc5b96ed210c8360b48acb0fa5ee32');
-
-		const response = await fetch('https://api.imgbb.com/1/upload', {
-				method: 'POST',
-				body: formData,
-		})
-		const result = await response.json();
-		return result.data.url;
+		try {
+			let formData = new FormData();
+					
+			formData.append('image', file);
+			formData.append('key', 'd8dc5b96ed210c8360b48acb0fa5ee32');
+	
+			const response = await fetch('https://api.imgbb.com/1/upload', {
+					method: 'POST',
+					// headers: {
+					// 	'Content-Type': 'multipart/form-data',
+					// },
+					body: formData,
+			})
+			const result = await response.json();
+			return result.data.url;
+			
+		} catch (error) {
+			console.error(error);
+			throw error
+		}
 	}
+
+
 
   const onPasswordUpdate = async function (e) {
     e.preventDefault();
@@ -184,6 +257,31 @@ export default function () {
                       <p className="description"></p>
                     </li>
                   </ul>
+
+									<div id="canvas-container" style={{ display: 'none' }}>
+										{/* <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}> */}
+										<canvas id="canvas" style={{ maxWidth: '220px', height: '220px', }} >
+											Your browser does not support the HTML5 canvas element.
+										</canvas>
+
+										<div style={{ display: 'grid', gridTemplateColumns: 'auto auto', gap: '10px' }}>
+											<button
+												onClick={onCropHandler}
+												type="button"
+												className="btn primary"
+											>
+												Crop
+											</button>
+											<button
+												onClick={onResetHandler}
+												type="button"
+												className="btn"
+											>
+												Reset
+											</button>
+										</div>
+										<img id="images" style={{ maxwidth: '220px', height: '220px' }} />
+									</div>	
 
                   <ul className="typecho-option typecho-option-submit">
                     <li>
