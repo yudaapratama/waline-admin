@@ -60,8 +60,8 @@ export default function () {
 	const onChangeImageHandler = event => {
 		event.preventDefault();
 		const container = document.getElementById('canvas-container');
-		let canvas = document.getElementById('canvas');
 		const img = document.getElementById('images');
+		const imgCrop = document.getElementById('images-cropper');
 
 		if (cropper) {
 			cropper.destroy();
@@ -85,30 +85,29 @@ export default function () {
 		img.src = URL.createObjectURL(event.target.files[0]);
 		previousImage = URL.createObjectURL(event.target.files[0]);
 
-		const context = canvas.getContext('2d');
-		const image = new Image();
-		
-		image.src = URL.createObjectURL(event.target.files[0]);
-		image.onload = function () {
-			canvas.width = img.offsetWidth;
-			canvas.height = img.offsetHeight;
-			context.drawImage(
-				image, 
-				0, 0, img.naturalWidth, img.naturalHeight,
-				0, 0, img.offsetWidth, img.offsetHeight
-			);
-			cropper = new Cropper(canvas);
-		};
+		imgCrop.src = URL.createObjectURL(event.target.files[0]);
+
+		cropper = new Cropper(imgCrop, {
+			viewMode: 1,
+			aspectRatio: 1
+		});
 
 		container.setAttribute('style', 'display: grid; grid-template-rows: auto auto; gap: 10px;');
 	}
 
 	const onCropHandler = (event) => {
 		event.preventDefault();
-		const data = cropper.getCroppedCanvas().toDataURL('image/png');
+		const data = cropper.getCroppedCanvas({
+			imageSmoothingEnabled: true,
+			imageSmoothingQuality: 'high',
+		}).toDataURL('image/png', 1);
 		const img = document.getElementById('images');
+		
 		img.src = data;
-		const base64 = cropper.getCroppedCanvas().toDataURL().replace(/^data:image\/(png|jpg|jpeg);base64,/, '')
+		const base64 = cropper.getCroppedCanvas({
+			imageSmoothingEnabled: true,
+    	imageSmoothingQuality: 'high',
+		}).toDataURL('image/jpeg', 1).replace(/^data:image\/(png|jpg|jpeg);base64,/, '')
 		croppedImage = base64
 	}
 
@@ -247,7 +246,6 @@ export default function () {
                   </ul>
 
                   
-
                   <ul className="typecho-option">
                     <li>
                       <label className="typecho-label" htmlFor="url-0-3">
@@ -264,12 +262,12 @@ export default function () {
                       <p className="description"></p>
                     </li>
                   </ul>
+									
+									<ul className="typecho-option">
+                    <li>
+									<div id="canvas-container" style={{ display: 'none', }}>
 
-									<div id="canvas-container" style={{ display: 'none' }}>
-										{/* <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}> */}
-										<canvas id="canvas" style={{ maxWidth: '220px', height: '220px', }} >
-											Your browser does not support the HTML5 canvas element.
-										</canvas>
+										<img src="" alt="" id="images-cropper" style={{ height: '256px' }} />
 
 										<div style={{ display: 'grid', gridTemplateColumns: 'auto auto', gap: '10px' }}>
 											<button
@@ -287,8 +285,10 @@ export default function () {
 												Reset
 											</button>
 										</div>
-										<img id="images" style={{ maxwidth: '220px', height: '220px' }} />
-									</div>	
+										<img id="images" alt="" style={{ height: '350px', maxWidth: '45vw' }} />
+									</div>
+									</li>
+                  </ul>
 
                   <ul className="typecho-option typecho-option-submit">
                     <li>
