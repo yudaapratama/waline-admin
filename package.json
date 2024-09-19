@@ -72,6 +72,6 @@
     "provenance": true
   },
   "dependencies": {
-    "cropperjs": "^1.6.2"
+    "cropt": "^0.8.9"
   }
 }

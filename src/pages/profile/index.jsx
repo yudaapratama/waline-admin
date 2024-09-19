@@ -2,8 +2,8 @@ import cls from 'classnames';
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import 'cropperjs/dist/cropper.css';
-import Cropper from 'cropperjs';
+import 'cropt/src/cropt.css';
+import { Cropt } from 'cropt';
 
 
 import TwoFactorAuth from './twoFactorAuth';
@@ -17,13 +17,16 @@ export default function () {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const { t } = useTranslation();
+
+	let element = null
 	let cropper = null
 	let previousImage = null
 	let croppedImage = null
 
   const onProfileUpdate = async function (e) {
     e.preventDefault();
-			                
+		setProfileUpdating(true);
+
 		const display_name = e.target.screenName.value;
 		// const avatar = e.target.avatar.files[0];
 		// const label = e.target.label.value;
@@ -44,7 +47,6 @@ export default function () {
 		//   return alert(t('nickname and homepage are required'));
 		// }
 
-		setProfileUpdating(true);
 		try {
 			await dispatch.user.updateProfile({ display_name, avatar: url });
 		} catch (e) {
@@ -52,26 +54,23 @@ export default function () {
 		} finally {
 			setProfileUpdating(false);
 			location.reload();
-			}
+		}
 
   };
 
 	
 	const onChangeImageHandler = event => {
 		event.preventDefault();
-		const container = document.getElementById('canvas-container');
-		const img = document.getElementById('images');
-		const imgCrop = document.getElementById('images-cropper');
-
-		if (cropper) {
-			cropper.destroy();
-			cropper = null;
-		}
+		const element = document.getElementById('image-container')
+		const wrapper = document.getElementById('image-container-wrapper');
+		const img = document.getElementById('image-result');
+		
+		wrapper.setAttribute('style', 'display: none;');
 		
 		if(event.target.files.length === 0) {
 			document.getElementsByClassName('file')[0].value = '';
 			img.removeAttribute('src');
-			container.setAttribute('style', 'display: none;');
+			img.setAttribute('style', 'display: none;');
 			return
 		}
 
@@ -82,40 +81,45 @@ export default function () {
 			return
 		}
 
-		img.src = URL.createObjectURL(event.target.files[0]);
-		previousImage = URL.createObjectURL(event.target.files[0]);
+		wrapper.removeAttribute('style');
 
-		imgCrop.src = URL.createObjectURL(event.target.files[0]);
+		if(cropper) {
+			cropper.destroy();
+		}
 
-		cropper = new Cropper(imgCrop, {
-			viewMode: 1,
-			aspectRatio: 1
+		cropper = new Cropt(element, {
+			viewport: {
+					width: 219,
+					height: 220,
+					type: "square",
+			},
+			mouseWheelZoom: "on",
 		});
 
-		container.setAttribute('style', 'display: grid; grid-template-rows: auto auto; gap: 10px;');
+		const reader = new FileReader();
+		reader.onload = function (e) {
+			cropper.bind(e.target.result)
+		};
+		reader.readAsDataURL(event.target.files[0]);
 	}
 
 	const onCropHandler = (event) => {
 		event.preventDefault();
-		const data = cropper.getCroppedCanvas({
-			imageSmoothingEnabled: true,
-			imageSmoothingQuality: 'high',
-		}).toDataURL('image/png', 1);
-		const img = document.getElementById('images');
+		cropper.toCanvas(300).then((canvas) => {
+			const img = document.getElementById('image-result');
+			img.removeAttribute('style');
+			img.src = canvas.toDataURL('image/jpeg', 1);
+			const base64 = canvas.toDataURL('image/jpeg', 1).replace(/^data:image\/(png|jpg|jpeg);base64,/, '')
+			croppedImage = base64
+		});
 		
-		img.src = data;
-		const base64 = cropper.getCroppedCanvas({
-			imageSmoothingEnabled: true,
-    	imageSmoothingQuality: 'high',
-		}).toDataURL('image/jpeg', 1).replace(/^data:image\/(png|jpg|jpeg);base64,/, '')
-		croppedImage = base64
 	}
 
 	const onResetHandler = (event) => {
 		event.preventDefault();
-		cropper.reset()
-		const img = document.getElementById('images');
-		img.src = previousImage;
+		cropper.refresh()
+		const img = document.getElementById('image-result');
+		img.setAttribute('style', 'display: none;');
 	}
 
 	const uploadToImgBB = async function (file) {
@@ -244,7 +248,35 @@ export default function () {
                       <p className="description"></p>
                     </li>
                   </ul>
+									
+									<ul className="typecho-option">
+                    <li>
+											<div id="image-container-wrapper" style={{display: 'none'}}>
+												<div id="image-container"></div>
+												<button
+													onClick={onCropHandler}
+													type="button"
+													className="btn primary"
+												>
+													Crop
+												</button>
+												<button
+													onClick={onResetHandler}
+													type="button"
+													className="btn"
+													style={{ marginLeft: '10px' }}
+												>
+													Reset
+												</button>
+											</div>
+										</li>
+                  </ul>
 
+									<ul className="typecho-option">
+										<li>
+											<img id="image-result" src="" alt="" style={{display: 'none'}}/>
+										</li>
+									</ul>
                   
                   <ul className="typecho-option">
                     <li>
@@ -261,33 +293,6 @@ export default function () {
                       />
                       <p className="description"></p>
                     </li>
-                  </ul>
-									
-									<ul className="typecho-option">
-                    <li>
-									<div id="canvas-container" style={{ display: 'none', }}>
-
-										<img src="" alt="" id="images-cropper" style={{ height: '256px' }} />
-
-										<div style={{ display: 'grid', gridTemplateColumns: 'auto auto', gap: '10px' }}>
-											<button
-												onClick={onCropHandler}
-												type="button"
-												className="btn primary"
-											>
-												Crop
-											</button>
-											<button
-												onClick={onResetHandler}
-												type="button"
-												className="btn"
-											>
-												Reset
-											</button>
-										</div>
-										<img id="images" alt="" style={{ height: '350px', maxWidth: '45vw' }} />
-									</div>
-									</li>
                   </ul>
 
                   <ul className="typecho-option typecho-option-submit">
