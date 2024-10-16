@@ -55,6 +55,12 @@ div[tabindex='-1'] {
   --color-4: #EB4335;
 }
 
+.account-item.shinigami:hover a #shinigami,
+.account-item.shinigami.bind a #shinigami {
+	--color-shinigami-1: #000;
+  --color-shinigami-2: #fff;
+}
+
 .account-item.github:hover a path,
 .account-item.github.bind a path {
   fill: #1b1f23;

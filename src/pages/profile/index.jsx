@@ -18,42 +18,45 @@ export default function () {
   const user = useSelector((state) => state.user);
   const { t } = useTranslation();
 
-	let element = null
 	let cropper = null
-	let previousImage = null
 	let croppedImage = null
 
   const onProfileUpdate = async function (e) {
-    e.preventDefault();
-		setProfileUpdating(true);
-
-		const display_name = e.target.screenName.value;
-		// const avatar = e.target.avatar.files[0];
-		// const label = e.target.label.value;
-
-		let avatar
-		if(croppedImage) {
-			avatar = croppedImage
-		} else {
-			avatar = e.target.avatar.files[0];
-		}
-		
-		let url = user.avatar;
-		if(avatar) {
-			url = await uploadToImgBB(avatar);
-		}
-
-		// if (!display_name || !url) {
-		//   return alert(t('nickname and homepage are required'));
-		// }
-
 		try {
-			await dispatch.user.updateProfile({ display_name, avatar: url });
+			e.preventDefault();
+			setProfileUpdating(true);
+
+			const display_name = e.target.screenName.value;
+			// const avatar = e.target.avatar.files[0];
+			// const label = e.target.label.value;
+
+			let avatar
+			if(croppedImage) {
+				avatar = croppedImage
+			} else {
+				avatar = e.target.avatar.files[0];
+			}
+			
+			let urlAvatar = user.avatar;
+			if(avatar) {
+				urlAvatar = await uploadToServer(avatar);
+			}
+
+			// if (!display_name || !url) {
+			//   return alert(t('nickname and homepage are required'));
+			// }
+
+			await dispatch.user.updateProfile({ display_name, avatar: urlAvatar });
+
 		} catch (e) {
+
 			alert(e);
+
 		} finally {
+
 			setProfileUpdating(false);
 			location.reload();
+
 		}
 
   };
@@ -103,16 +106,16 @@ export default function () {
 		reader.readAsDataURL(event.target.files[0]);
 	}
 
-	const onCropHandler = (event) => {
+	const onCropHandler = async (event) => {
 		event.preventDefault();
-		cropper.toCanvas(300).then((canvas) => {
+		cropper.toCanvas(300).then(async (canvas) => {
 			const img = document.getElementById('image-result');
 			img.removeAttribute('style');
 			img.src = canvas.toDataURL('image/jpeg', 1);
-			const base64 = canvas.toDataURL('image/jpeg', 1).replace(/^data:image\/(png|jpg|jpeg);base64,/, '')
-			croppedImage = base64
 		});
-		
+
+		const blob = await cropper.toBlob(300, 'image/jpeg') 
+		croppedImage = new File([blob], 'image.jpeg', { type: blob.type })
 	}
 
 	const onResetHandler = (event) => {
@@ -122,22 +125,21 @@ export default function () {
 		img.setAttribute('style', 'display: none;');
 	}
 
-	const uploadToImgBB = async function (file) {
+	const uploadToServer = async function (file) {
 		try {
 			let formData = new FormData();
 					
-			formData.append('image', file);
-			formData.append('key', 'd8dc5b96ed210c8360b48acb0fa5ee32');
+			formData.append('file', file);
 	
-			const response = await fetch('https://api.imgbb.com/1/upload', {
-					method: 'POST',
-					// headers: {
-					// 	'Content-Type': 'multipart/form-data',
-					// },
-					body: formData,
-			})
-			const result = await response.json();
-			return result.data.url;
+			const result = await fetch('/upload', {
+				headers: {
+					Authorization: `Bearer ${window.TOKEN || sessionStorage.getItem('TOKEN')}`
+				},
+				method: 'PUT',
+				body: formData
+			});
+			const { data } = await result.json();
+			return data.url;
 			
 		} catch (error) {
 			console.error(error);
@@ -145,7 +147,30 @@ export default function () {
 		}
 	}
 
+	const onClickConnect = async () => {
+		try {
+			const resp = await fetch(`/get-user-by-email?email=${user.email}`, {
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer VSa@JSIJHJK%Jaa@PgcJ@C!SKkfd&OCc8`
+				},
+				mode: 'no-cors',
+			})
 
+			const json = await resp.json()
+
+			if(!resp.ok) {
+				return alert(json.message)
+			}
+
+			const userId = json.data.user_id
+			await dispatch.user.updateProfile({ url: `https://go.shng.me/user/${userId}` });
+
+		} catch (error) {
+			console.error(error);
+			return alert(`Something went wrong: ${error.message}`);
+		}
+	};
 
   const onPasswordUpdate = async function (e) {
     e.preventDefault();
@@ -309,7 +334,34 @@ export default function () {
                 </form>
               </section>
               <br />
-              
+              <section id="social-account">
+							<h3>Connect to Shinigami</h3>
+								<div
+									className="account-item shinigami"
+								>
+									<a
+										// href="javascript:void(0);"
+										rel="noreferrer"
+										onClick={onClickConnect}
+									>
+										{React.createElement(Icons["shinigami"])}
+									</a>
+									<div
+										className="account-unbind"
+										onClick={() => unbind("shinigami")}
+									>
+										<svg
+											className="close-icon"
+											viewBox="0 0 1024 1024"
+											xmlns="http://www.w3.org/2000/svg"
+											width="14"
+											height="14"
+										>
+											<path d="m568.569 512 170.267-170.267c15.556-15.556 15.556-41.012 0-56.569s-41.012-15.556-56.569 0L512 455.431 341.733 285.165c-15.556-15.556-41.012-15.556-56.569 0s-15.556 41.012 0 56.569L455.431 512 285.165 682.267c-15.556 15.556-15.556 41.012 0 56.569 15.556 15.556 41.012 15.556 56.569 0L512 568.569l170.267 170.267c15.556 15.556 41.012 15.556 56.569 0 15.556-15.556 15.556-41.012 0-56.569L568.569 512z" />
+										</svg>
+									</div>
+								</div>
+							</section>
               
               <br />
             </div>
