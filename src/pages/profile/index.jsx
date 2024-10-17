@@ -1,5 +1,4 @@
 import cls from 'classnames';
-import axios from 'axios'
 import https from 'https'
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
