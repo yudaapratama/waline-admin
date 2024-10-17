@@ -1,4 +1,6 @@
 import cls from 'classnames';
+import axios from 'axios'
+import https from 'https'
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -149,25 +151,24 @@ export default function () {
 
 	const onClickConnect = async () => {
 		try {
-			const resp = await fetch(`/get-user-by-email?email=${user.email}`, {
-				method: 'GET',
+				const resp = await fetch(`https://izanami.rest/api/v1/sys/get-user-by-email?email=${user.email}`, {
 				headers: {
-					Authorization: `Bearer VSa@JSIJHJK%Jaa@PgcJ@C!SKkfd&OCc8`
+					"Authorization": `Bearer VSa@JSIJHJK%Jaa@PgcJ@C!SKkfd&OCc8`,
 				},
-				mode: 'no-cors',
 			})
 
-			const json = await resp.json()
-
 			if(!resp.ok) {
-				return alert(json.message)
+				const json = await resp.json()
+				return alert(`Error: ${json.message}`)	
 			}
 
+			const json = await resp.json()
+			
 			const userId = json.data.user_id
 			await dispatch.user.updateProfile({ url: `https://go.shng.me/user/${userId}` });
 
 		} catch (error) {
-			console.error(error);
+			console.error("error", error);
 			return alert(`Something went wrong: ${error.message}`);
 		}
 	};
@@ -335,31 +336,17 @@ export default function () {
               </section>
               <br />
               <section id="social-account">
-							<h3>Connect to Shinigami</h3>
+							<h3>Connect</h3>
 								<div
 									className="account-item shinigami"
 								>
-									<a
-										// href="javascript:void(0);"
-										rel="noreferrer"
+									<button
+										disabled={isProfileUpdating}
+										className="btn primary"
 										onClick={onClickConnect}
 									>
-										{React.createElement(Icons["shinigami"])}
-									</a>
-									<div
-										className="account-unbind"
-										onClick={() => unbind("shinigami")}
-									>
-										<svg
-											className="close-icon"
-											viewBox="0 0 1024 1024"
-											xmlns="http://www.w3.org/2000/svg"
-											width="14"
-											height="14"
-										>
-											<path d="m568.569 512 170.267-170.267c15.556-15.556 15.556-41.012 0-56.569s-41.012-15.556-56.569 0L512 455.431 341.733 285.165c-15.556-15.556-41.012-15.556-56.569 0s-15.556 41.012 0 56.569L455.431 512 285.165 682.267c-15.556 15.556-15.556 41.012 0 56.569 15.556 15.556 41.012 15.556 56.569 0L512 568.569l170.267 170.267c15.556 15.556 41.012 15.556 56.569 0 15.556-15.556 15.556-41.012 0-56.569L568.569 512z" />
-										</svg>
-									</div>
+										Connect to Shinigami
+									</button>
 								</div>
 							</section>
               
