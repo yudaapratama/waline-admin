@@ -9,6 +9,7 @@ import Migration from './pages/migration';
 import Profile from './pages/profile';
 import Register from './pages/register';
 import User from './pages/user';
+import Banned from './pages/banned';
 import { store } from './store';
 
 function Access(props) {
@@ -74,6 +75,7 @@ export default function () {
           <Route path="/ui/login" exact element={<Login />} />
           <Route path="/ui/register" exact element={<Register />} />
           <Route path="/ui/forgot" exact element={<Forgot />} />
+					<Route path="/ui/banned" exact element={<Banned />} />
           <Route
             path="/ui/profile"
             exact
@@ -83,6 +85,7 @@ export default function () {
               </Access>
             }
           />
+
         </Routes>
       </Router>
     </Provider>

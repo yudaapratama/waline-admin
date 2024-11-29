@@ -866,6 +866,8 @@ select {
 
 .typecho-list-operate span.operate-delete,
 a.operate-delete,
+.typecho-list-operate span.operate-banned,
+a.operate-banned,
 .typecho-list-operate span.operate-button-delete,
 a.operate-button-delete {
   color: #b94a48;

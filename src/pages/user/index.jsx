@@ -77,6 +77,38 @@ export default function () {
           setList({ ...list });
         },
       },
+			{
+        key: 'banned',
+        name: 'Banned User',
+        show: !user.is_banned,
+        async action(e) {
+          e.preventDefault();
+
+          await updateUser({
+            id: user.objectId,
+            is_banned: 1,
+          });
+
+          user.is_banned = 1;
+          setList({ ...list });
+        },
+      },
+			{
+        key: 'unbanned',
+        name: 'Unbanned User',
+        show: user.is_banned,
+        async action(e) {
+          e.preventDefault();
+
+          await updateUser({
+            id: user.objectId,
+            is_banned: 0,
+          });
+
+          user.is_banned = 0;
+          setList({ ...list });
+        },
+      },
       // todo
       // {
       //   key: 'delete',

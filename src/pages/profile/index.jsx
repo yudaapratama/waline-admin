@@ -79,7 +79,7 @@ export default function () {
 		}
 
     const size = event.target.files[0].size
-		if(parseInt(size) > (31 * 1024 * 1024)) {
+		if(parseInt(size) > (1 * 1024 * 1024)) {
 			alert('The image size is too large, please choose another one');
 			document.getElementsByClassName('file')[0].value = '';
 			return
@@ -132,15 +132,12 @@ export default function () {
 					
 			formData.append('file', file);
 	
-			const result = await fetch('/upload', {
-				headers: {
-					Authorization: `Bearer ${window.TOKEN || sessionStorage.getItem('TOKEN')}`
-				},
-				method: 'PUT',
+			const result = await fetch('https://upload.shngm.id/upload/image', {
+				method: 'POST',
 				body: formData
 			});
-			const { data } = await result.json();
-			return data.url;
+			const data = await result.json();
+			return data.imageUrl
 			
 		} catch (error) {
 			console.error(error);

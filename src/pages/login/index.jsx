@@ -74,7 +74,8 @@ export default function () {
         turnstile: window.turnstileKey ? token : undefined,
       });
     } catch (e) {
-      setError(t('email or password error'));
+			
+			setError(e.message || t('email or password error'));
     } finally {
       setLoading(false);
     }
