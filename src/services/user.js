@@ -14,9 +14,9 @@ export function updateProfile(data) {
   return request({ url: 'user', method: 'PUT', body: data });
 }
 
-export function getUserList({ page }) {
+export function getUserList({ page, filter }) {
   return request({
-    url: `user?page=${page}`,
+    url: `user?page=${page}&keyword=${filter.keyword}`,
     method: 'GET',
   });
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
@@ -8,6 +8,7 @@ import { getUserList, updateUser } from '../../services/user';
 import { buildAvatar } from '../manage-comments/utils';
 
 export default function () {
+	const keywordRef = useRef(null);
   const currentUser = useSelector((state) => state.user);
   const { t } = useTranslation();
   const [list, setList] = useState({
@@ -18,12 +19,18 @@ export default function () {
     data: [],
   });
 
+	const [filter, dispatch] = useReducer(
+		function (state, action) {
+      return { ...state, ...action };
+    },
+    { keyword: '' },
+	)
+
   useEffect(() => {
-    getUserList({ page: list.page }).then((data) => {
-      console.log(data);
+    getUserList({ page: list.page, filter }).then((data) => {
       setList({ ...list, ...data });
     });
-  }, [list.page]);
+  }, [filter, list.page]);
 
   const createActions = (user) =>
     [
@@ -135,7 +142,31 @@ export default function () {
             <h2>{t('manage users')}</h2>
           </div>
           <div className="row typecho-page-main" role="main">
+
             <div className="col-mb-12 typecho-list">
+							<div className="typecho-list-operate clear-fix">
+
+                  <div className="search" role="search">
+                    <input
+                      type="text"
+                      ref={keywordRef}
+                      className="text-s"
+                      placeholder="Search user..."
+                    />
+                    &nbsp;
+                    <button
+                      type="submit"
+                      className="btn btn-s"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        dispatch({ keyword: keywordRef.current.value });
+                      }}
+                    >
+                      {t('filter')}
+                    </button>
+                  </div>
+              </div>
+
               <form
                 method="post"
                 name="manage_comments"
