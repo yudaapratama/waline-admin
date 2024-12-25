@@ -15,6 +15,7 @@ import { updateProfile } from '../../services/user';
 export default function () {
   const [isPasswordUpdating, setPasswordUpdating] = useState(false);
   const [isProfileUpdating, setProfileUpdating] = useState(false);
+	const [isConnecting, setConnecting] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const { t } = useTranslation();
@@ -147,7 +148,8 @@ export default function () {
 
 	const onClickConnect = async () => {
 		try {
-				const resp = await fetch(`https://izanami.rest/api/v1/sys/get-user-by-email?email=${user.email}`, {
+			setConnecting(true)
+			const resp = await fetch(`https://izanami.rest/api/v1/sys/get-user-by-email?email=${user.email}`, {
 				headers: {
 					"Authorization": `Bearer VSa@JSIJHJK%Jaa@PgcJ@C!SKkfd&OCc8`,
 				},
@@ -163,8 +165,10 @@ export default function () {
 			const userId = json.data.user_id
 			await dispatch.user.updateProfile({ url: `https://go.shng.me/user/${userId}` });
 
+			setConnecting(false)
 		} catch (error) {
 			console.error("error", error);
+			setConnecting(false)
 			return alert(`Something went wrong: ${error.message}`);
 		}
 	};
@@ -337,11 +341,17 @@ export default function () {
 									className="account-item shinigami"
 								>
 									<button
-										disabled={isProfileUpdating}
+										disabled={isConnecting}
 										className="btn primary"
+										style={{ minWidth: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
 										onClick={onClickConnect}
 									>
-										Connect to Shinigami
+										{ isConnecting ? (
+											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" width="24" height="24" style={{'shape-rendering': 'auto', display: 'block', background: 'transparent'}} xmlns:xlink="http://www.w3.org/1999/xlink"><g><circle stroke-dasharray="127.23450247038662 44.411500823462205" r="27" stroke-width="8" stroke="#fff" fill="none" cy="50" cx="50">
+											<animateTransform keyTimes="0;1" values="0 50 50;360 50 50" dur="1s" repeatCount="indefinite" type="rotate" attributeName="transform"></animateTransform>
+										</circle><g></g></g></svg>
+										): 'Connect to Shinigami'}
+										
 									</button>
 								</div>
 							</section>
