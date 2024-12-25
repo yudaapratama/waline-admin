@@ -156,6 +156,7 @@ export default function () {
 			})
 
 			if(!resp.ok) {
+				setConnecting(false)
 				const json = await resp.json()
 				return alert(`Error: ${json.message}`)	
 			}

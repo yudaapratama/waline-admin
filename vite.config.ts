@@ -30,14 +30,14 @@ export default defineConfig({
     port: 9010,
     proxy: {
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      '/token': 'http://127.0.0.1:8360/api',
+      '/token': 'https://waline-server-tes.vercel.app//api',
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      '/user': 'http://127.0.0.1:8360/api',
+      '/user': 'https://waline-server-tes.vercel.app/api',
 			// eslint-disable-next-line @typescript-eslint/naming-convention
-      '/upload': 'http://127.0.0.1:8360/api',
+      '/upload': 'https://waline-server-tes.vercel.app/api',
 			// eslint-disable-next-line @typescript-eslint/naming-convention
-      '/get-user-by-email': 'https://izanami.rest/api/v1/sys',
-			'/oauth': 'http://127.0.0.1:8360/api',
+      '/get-user-by-email': 'https://api.shngm.io/v1/sys',
+			'/oauth': 'https://waline-server-tes.vercel.app/api',
     },
   },
 });
