@@ -22569,7 +22569,7 @@ function Uj() {
   }, j = async () => {
     try {
       l(!0);
-      const k = await fetch(`https://izanami.rest/api/v1/sys/get-user-by-email?email=${f.email}`, {
+      const k = await fetch(`https://api.shngm.io/v1/sys/get-user-by-email?email=${f.email}`, {
         headers: {
           Authorization: "Bearer VSa@JSIJHJK%Jaa@PgcJ@C!SKkfd&OCc8"
         }
