@@ -22575,6 +22575,7 @@ function Uj() {
         }
       });
       if (!k.ok) {
+        l(!1);
         const P = await k.json();
         return alert(`Error: ${P.message}`);
       }
@@ -22594,17 +22595,17 @@ function Uj() {
   return M || (M = localStorage.getItem("TOKEN")), /* @__PURE__ */ N.jsxDEV(N.Fragment, { children: [
     /* @__PURE__ */ N.jsxDEV(ho, {}, void 0, !1, {
       fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-      lineNumber: 230,
+      lineNumber: 231,
       columnNumber: 7
     }, this),
     /* @__PURE__ */ N.jsxDEV("div", { className: "main", children: /* @__PURE__ */ N.jsxDEV("div", { className: "body container", children: [
       /* @__PURE__ */ N.jsxDEV("div", { className: "typecho-page-title", children: /* @__PURE__ */ N.jsxDEV("h2", { children: c("setting") }, void 0, !1, {
         fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-        lineNumber: 234,
+        lineNumber: 235,
         columnNumber: 13
       }, this) }, void 0, !1, {
         fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-        lineNumber: 233,
+        lineNumber: 234,
         columnNumber: 11
       }, this),
       /* @__PURE__ */ N.jsxDEV("div", { className: "row typecho-page-main", children: [
@@ -22623,7 +22624,7 @@ function Uj() {
                 !1,
                 {
                   fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                  lineNumber: 242,
+                  lineNumber: 243,
                   columnNumber: 19
                 },
                 this
@@ -22633,28 +22634,28 @@ function Uj() {
             !1,
             {
               fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-              lineNumber: 239,
+              lineNumber: 240,
               columnNumber: 17
             },
             this
           ) }, void 0, !1, {
             fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-            lineNumber: 238,
+            lineNumber: 239,
             columnNumber: 15
           }, this),
           /* @__PURE__ */ N.jsxDEV("h2", { children: f.display_name }, void 0, !1, {
             fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-            lineNumber: 251,
+            lineNumber: 252,
             columnNumber: 15
           }, this),
           /* @__PURE__ */ N.jsxDEV("p", { children: f.email }, void 0, !1, {
             fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-            lineNumber: 252,
+            lineNumber: 253,
             columnNumber: 15
           }, this)
         ] }, void 0, !0, {
           fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-          lineNumber: 237,
+          lineNumber: 238,
           columnNumber: 13
         }, this),
         /* @__PURE__ */ N.jsxDEV(
@@ -22666,14 +22667,14 @@ function Uj() {
               /* @__PURE__ */ N.jsxDEV("section", { children: [
                 /* @__PURE__ */ N.jsxDEV("h3", { children: c("profile") }, void 0, !1, {
                   fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                  lineNumber: 260,
+                  lineNumber: 261,
                   columnNumber: 17
                 }, this),
                 /* @__PURE__ */ N.jsxDEV("form", { method: "post", onSubmit: p, children: [
                   /* @__PURE__ */ N.jsxDEV("ul", { className: "typecho-option", children: /* @__PURE__ */ N.jsxDEV("li", { children: [
                     /* @__PURE__ */ N.jsxDEV("label", { className: "typecho-label", htmlFor: "screenName-0-1", children: c("nickname") }, void 0, !1, {
                       fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                      lineNumber: 264,
+                      lineNumber: 265,
                       columnNumber: 23
                     }, this),
                     /* @__PURE__ */ N.jsxDEV(
@@ -22689,29 +22690,29 @@ function Uj() {
                       !1,
                       {
                         fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                        lineNumber: 267,
+                        lineNumber: 268,
                         columnNumber: 23
                       },
                       this
                     ),
                     /* @__PURE__ */ N.jsxDEV("p", { className: "description" }, void 0, !1, {
                       fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                      lineNumber: 274,
+                      lineNumber: 275,
                       columnNumber: 23
                     }, this)
                   ] }, void 0, !0, {
                     fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                    lineNumber: 263,
+                    lineNumber: 264,
                     columnNumber: 21
                   }, this) }, void 0, !1, {
                     fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                    lineNumber: 262,
+                    lineNumber: 263,
                     columnNumber: 19
                   }, this),
                   /* @__PURE__ */ N.jsxDEV("ul", { className: "typecho-option", children: /* @__PURE__ */ N.jsxDEV("li", { children: /* @__PURE__ */ N.jsxDEV("div", { id: "image-container-wrapper", style: { display: "none" }, children: [
                     /* @__PURE__ */ N.jsxDEV("div", { id: "image-container" }, void 0, !1, {
                       fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                      lineNumber: 281,
+                      lineNumber: 282,
                       columnNumber: 13
                     }, this),
                     /* @__PURE__ */ N.jsxDEV(
@@ -22726,7 +22727,7 @@ function Uj() {
                       !1,
                       {
                         fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                        lineNumber: 282,
+                        lineNumber: 283,
                         columnNumber: 13
                       },
                       this
@@ -22744,41 +22745,41 @@ function Uj() {
                       !1,
                       {
                         fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                        lineNumber: 289,
+                        lineNumber: 290,
                         columnNumber: 13
                       },
                       this
                     )
                   ] }, void 0, !0, {
                     fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                    lineNumber: 280,
+                    lineNumber: 281,
                     columnNumber: 12
                   }, this) }, void 0, !1, {
                     fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                    lineNumber: 279,
+                    lineNumber: 280,
                     columnNumber: 21
                   }, this) }, void 0, !1, {
                     fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                    lineNumber: 278,
+                    lineNumber: 279,
                     columnNumber: 10
                   }, this),
                   /* @__PURE__ */ N.jsxDEV("ul", { className: "typecho-option", children: /* @__PURE__ */ N.jsxDEV("li", { children: /* @__PURE__ */ N.jsxDEV("img", { id: "image-result", src: "", alt: "", style: { display: "none" } }, void 0, !1, {
                     fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                    lineNumber: 303,
+                    lineNumber: 304,
                     columnNumber: 12
                   }, this) }, void 0, !1, {
                     fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                    lineNumber: 302,
+                    lineNumber: 303,
                     columnNumber: 11
                   }, this) }, void 0, !1, {
                     fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                    lineNumber: 301,
+                    lineNumber: 302,
                     columnNumber: 10
                   }, this),
                   /* @__PURE__ */ N.jsxDEV("ul", { className: "typecho-option", children: /* @__PURE__ */ N.jsxDEV("li", { children: [
                     /* @__PURE__ */ N.jsxDEV("label", { className: "typecho-label", htmlFor: "url-0-3", children: c("change avatar") }, void 0, !1, {
                       fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                      lineNumber: 309,
+                      lineNumber: 310,
                       columnNumber: 23
                     }, this),
                     /* @__PURE__ */ N.jsxDEV(
@@ -22795,23 +22796,23 @@ function Uj() {
                       !1,
                       {
                         fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                        lineNumber: 312,
+                        lineNumber: 313,
                         columnNumber: 23
                       },
                       this
                     ),
                     /* @__PURE__ */ N.jsxDEV("p", { className: "description" }, void 0, !1, {
                       fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                      lineNumber: 320,
+                      lineNumber: 321,
                       columnNumber: 23
                     }, this)
                   ] }, void 0, !0, {
                     fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                    lineNumber: 308,
+                    lineNumber: 309,
                     columnNumber: 21
                   }, this) }, void 0, !1, {
                     fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                    lineNumber: 307,
+                    lineNumber: 308,
                     columnNumber: 19
                   }, this),
                   /* @__PURE__ */ N.jsxDEV("ul", { className: "typecho-option typecho-option-submit", children: /* @__PURE__ */ N.jsxDEV("li", { children: /* @__PURE__ */ N.jsxDEV(
@@ -22826,38 +22827,38 @@ function Uj() {
                     !1,
                     {
                       fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                      lineNumber: 326,
+                      lineNumber: 327,
                       columnNumber: 23
                     },
                     this
                   ) }, void 0, !1, {
                     fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                    lineNumber: 325,
+                    lineNumber: 326,
                     columnNumber: 21
                   }, this) }, void 0, !1, {
                     fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                    lineNumber: 324,
+                    lineNumber: 325,
                     columnNumber: 19
                   }, this)
                 ] }, void 0, !0, {
                   fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                  lineNumber: 261,
+                  lineNumber: 262,
                   columnNumber: 17
                 }, this)
               ] }, void 0, !0, {
                 fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                lineNumber: 259,
+                lineNumber: 260,
                 columnNumber: 15
               }, this),
               /* @__PURE__ */ N.jsxDEV("br", {}, void 0, !1, {
                 fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                lineNumber: 337,
+                lineNumber: 338,
                 columnNumber: 15
               }, this),
               /* @__PURE__ */ N.jsxDEV("section", { id: "social-account", children: [
                 /* @__PURE__ */ N.jsxDEV("h3", { children: "Connect" }, void 0, !1, {
                   fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                  lineNumber: 339,
+                  lineNumber: 340,
                   columnNumber: 8
                 }, this),
                 /* @__PURE__ */ N.jsxDEV(
@@ -22874,25 +22875,25 @@ function Uj() {
                         children: s ? /* @__PURE__ */ N.jsxDEV("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 100 100", preserveAspectRatio: "xMidYMid", width: "24", height: "24", style: { "shape-rendering": "auto", display: "block", background: "transparent" }, "xmlns:xlink": "http://www.w3.org/1999/xlink", children: /* @__PURE__ */ N.jsxDEV("g", { children: [
                           /* @__PURE__ */ N.jsxDEV("circle", { "stroke-dasharray": "127.23450247038662 44.411500823462205", r: "27", "stroke-width": "8", stroke: "#fff", fill: "none", cy: "50", cx: "50", children: /* @__PURE__ */ N.jsxDEV("animateTransform", { keyTimes: "0;1", values: "0 50 50;360 50 50", dur: "1s", repeatCount: "indefinite", type: "rotate", attributeName: "transform" }, void 0, !1, {
                             fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                            lineNumber: 351,
+                            lineNumber: 352,
                             columnNumber: 12
                           }, this) }, void 0, !1, {
                             fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                            lineNumber: 350,
+                            lineNumber: 351,
                             columnNumber: 255
                           }, this),
                           /* @__PURE__ */ N.jsxDEV("g", {}, void 0, !1, {
                             fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                            lineNumber: 352,
+                            lineNumber: 353,
                             columnNumber: 20
                           }, this)
                         ] }, void 0, !0, {
                           fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                          lineNumber: 350,
+                          lineNumber: 351,
                           columnNumber: 252
                         }, this) }, void 0, !1, {
                           fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                          lineNumber: 350,
+                          lineNumber: 351,
                           columnNumber: 12
                         }, this) : "Connect to Shinigami"
                       },
@@ -22900,7 +22901,7 @@ function Uj() {
                       !1,
                       {
                         fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                        lineNumber: 343,
+                        lineNumber: 344,
                         columnNumber: 10
                       },
                       this
@@ -22910,19 +22911,19 @@ function Uj() {
                   !1,
                   {
                     fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                    lineNumber: 340,
+                    lineNumber: 341,
                     columnNumber: 9
                   },
                   this
                 )
               ] }, void 0, !0, {
                 fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                lineNumber: 338,
+                lineNumber: 339,
                 columnNumber: 15
               }, this),
               /* @__PURE__ */ N.jsxDEV("br", {}, void 0, !1, {
                 fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-                lineNumber: 359,
+                lineNumber: 360,
                 columnNumber: 15
               }, this)
             ]
@@ -22931,28 +22932,28 @@ function Uj() {
           !0,
           {
             fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-            lineNumber: 255,
+            lineNumber: 256,
             columnNumber: 13
           },
           this
         )
       ] }, void 0, !0, {
         fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-        lineNumber: 236,
+        lineNumber: 237,
         columnNumber: 11
       }, this)
     ] }, void 0, !0, {
       fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-      lineNumber: 232,
+      lineNumber: 233,
       columnNumber: 9
     }, this) }, void 0, !1, {
       fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-      lineNumber: 231,
+      lineNumber: 232,
       columnNumber: 7
     }, this)
   ] }, void 0, !0, {
     fileName: "C:/Projek/NodeJS/waline-admin/src/pages/profile/index.jsx",
-    lineNumber: 229,
+    lineNumber: 230,
     columnNumber: 5
   }, this);
 }
